@@ -5,13 +5,41 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
-router.get("/login", async (req,res)  =>{
-    res.send("Login");
+router.post("/login", async (req,res)  =>{
+    try{
+ const {email , password}=req.body;
+
+ if(!email || !password){
+    return res.status(400).json({message: "All fields are required"});
+ }
+const user = await User.findOne({email});
+if(!user){
+    return res.status(400).json({message: "Email does not exist"});
+}
+
+
+//check password
+const isPasswordCorrect = await user.comparePasswords(password);
+
+if(!isPasswordCorrect){
+   return res.status(400).json({message:"Invalid credentials"});
+}
+
+const token = generateToken(user._id);
+res.status(200).json({
+token,
+user:{
+    id:user._id,
+    username:user.username,
+    email:user.email,
+    profileImage:user.profileImage,
+},
 });
-router.post("/test", async (req,res)  =>{
-    res.status(201).json({
-        "name":"fahad",
-    });
+}catch(error){
+    console.log("Error in login route",error);
+    res.status(500).json({message:"Internal server error"});}
+
+
 });
 
 //generate token function
