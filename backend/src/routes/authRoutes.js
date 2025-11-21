@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
+router.get("/test",async (req,res)=> res.send("/test"));
+
 router.post("/login", async (req,res)  =>{
     try{
  const {email , password}=req.body;
@@ -44,7 +46,7 @@ user:{
 
 //generate token function
 const generateToken = (userId) => {
-    return jwt.sign({userId}, process.env.JWT_SECRET, { expiresIn: "15"});
+    return jwt.sign({userId}, process.env.JWT_SECRET, { expiresIn: "15m"});
 }
 
 
