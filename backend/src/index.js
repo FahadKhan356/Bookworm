@@ -7,7 +7,7 @@ import cors from "cors";
 
 const app = express();
 
-const PORT=process.env.PORT;
+// const PORT=process.env.PORT;
 
 
 
@@ -20,9 +20,9 @@ app.use("/api/authentication",authRoutes);
 app.use("/api/books", bookRoutes);
 
 connectDB();
-app.listen(PORT,()=>{
-    console.log({PORT});
-    console.log(`server is running on Port ${PORT}`);
-    console.log("AUTH ROUTES:", authRoutes);
+// app.listen(PORT,()=>{
+//     console.log({PORT});
+//     console.log(`server is running on Port ${PORT}`);
+//     console.log("AUTH ROUTES:", authRoutes);
     
-});
+// });
