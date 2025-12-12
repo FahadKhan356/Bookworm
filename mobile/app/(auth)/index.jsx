@@ -1,17 +1,26 @@
-import { View, Image, Text, TextInput, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView } from "react-native";
-import { useState } from "react";
+import { View, Image, Text, TextInput, TouchableOpacity, ActivityIndicator, KeyboardAvoidingView, Platform, ScrollView, Alert } from "react-native";
+import { useEffect, useState } from "react";
 import styles from "../../assets/styles/login.styles";
 import { Ionicons } from "@expo/vector-icons";
 import COLORS from "../../constants/colors";
 import {Link} from "expo-router";
+import { useAuthStore } from "../../store/authStore.js";
+
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+   
+  const store=useAuthStore();
 
-  const handleSign = () => { };
+  
+
+  const handleSign = async () => { 
+    const result =  await store.login(email, Password);
+    if(!result.success){Alert.alert("Error", result.error)}
+
+  };
 
   return (
     <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === "ios"? "padding" : "height"}>
@@ -27,6 +36,7 @@ export default function Login() {
       {/* Top Illustration */}
       <View style={styles.topIllustration}>
         <Image
+        so
           style={styles.illustrationImage}
           source={require("../../assets/images/i.png")}
           resizeMode="contain"
@@ -91,8 +101,8 @@ export default function Login() {
 
         </View>
 
-        <TouchableOpacity style={styles.button} onPress={handleSign} disabled={isLoading}>
-         {isLoading ? (<ActivityIndicator color='#fff'></ActivityIndicator>) : <Text style={styles.buttonText}>Login</Text>}
+        <TouchableOpacity style={styles.button} onPress={handleSign} disabled={store.isLoading}>
+         {store.isLoading ? (<ActivityIndicator color='#fff'></ActivityIndicator>) : <Text style={styles.buttonText}>Login</Text>}
         </TouchableOpacity>
         
       <View style={styles.footer}>

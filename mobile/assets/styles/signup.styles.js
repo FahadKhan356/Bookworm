@@ -55,13 +55,13 @@ const styles = StyleSheet.create({
     borderColor: COLORS.border,
     paddingHorizontal: 12,
   },
-  inputIcon: { marginRight: 10 },
+  inputIcon: { marginRight: 10},
   input: {
     flex: 1,
     height: 48,
     color: COLORS.textDark,
   },
-  eyeIcon: { padding: 8 },
+  eyeIcon: { padding: 8, },
   button: {
     backgroundColor: COLORS.primary,
     borderRadius: 12,
