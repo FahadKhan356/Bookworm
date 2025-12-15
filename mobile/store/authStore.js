@@ -13,7 +13,7 @@ export const useAuthStore = create((set) => ({
         try {
 
 
-            const response = await fetch(`${API_URL}/authentication/register`, { 
+            const response = await fetch(`${API_URL}/api/authentication/register`, { 
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export const useAuthStore = create((set) => ({
         const user = userJson ? JSON.parse(userJson) : null;
   
          set({ user: user, token: userToken});
-         console.log(`inside checkAuth user : ${user} | token : ${userToken}`);
+         console.log(`inside checkAuth user : ${user.username} | token : ${userToken}`);
 
      }catch(error){
         console.log("Error",error);

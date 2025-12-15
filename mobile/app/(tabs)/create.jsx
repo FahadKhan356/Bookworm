@@ -24,6 +24,8 @@ export default function Create() {
 
   console.log(token);
 
+
+
   const pickImage = async () => {
     try {
       // request permission if needed
