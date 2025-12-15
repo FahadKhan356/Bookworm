@@ -9,6 +9,7 @@ import { API_URL } from '../../constants/api.js'
 import styles from '../../assets/styles/create.style.js'
 import { useAuthStore } from '../../store/authStore.js'
 import { useRouter  } from 'expo-router' 
+import { readAsStringAsync } from 'expo-file-system';
 
 export default function Create() {
   const [title, setTitle] = useState("");
@@ -53,7 +54,7 @@ export default function Create() {
           setImageBase64(result.assets[0].base64);
         } else {
           // otherwise, convert to base64
-          const base64 = await FileSystem.readAsStringAsync(result.assets[0].uri, {
+          const base64 = await FileSystem.text(result.assets[0].uri, {
             encoding: FileSystem.EncodingType.Base64,
           });
 
@@ -82,7 +83,7 @@ export default function Create() {
 
       const imageDataUrl = `data:${imageType};base64,${imageBase64}`;
 
-      const response = await fetch(`http://192.168.43.187:3001/api/books/`, {
+      const response = await fetch(`http://192.168.43.187:3001/api/books`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -175,7 +176,7 @@ export default function Create() {
               <Text style={styles.label}>Book Image</Text>
               <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
                 {image ? (
-                  <Image source={{ uri: image }} style={styles.previewImage} />
+                  <Image source={{ uri: image }} style={styles.previewImage } conten />
                 ) : (
                   <View style={styles.placeholderContainer}>
                     <Ionicons name="image-outline" size={40} color={COLORS.textSecondary} />
